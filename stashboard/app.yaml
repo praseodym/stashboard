@@ -1,7 +1,8 @@
-application: stashboard
+application: beheerch
 version: 2
-runtime: python
+runtime: python27
 api_version: 1
+threadsafe: false
 
 derived_file_type:
 - python_precompiled
@@ -10,10 +11,17 @@ builtins:
 - appstats: on
 - remote_api: on
 
+libraries:
+- name: django
+  version: 1.2
+
 handlers:
 - url: /console/.*
   script: $PYTHON_LIB/google/appengine/ext/admin
   login: admin
+
+- url: /font
+  static_dir: static/font
 
 - url: /css
   static_dir: static/css
@@ -40,6 +48,10 @@ handlers:
   script: main.py
   secure: always
   login: admin
+
+- url: /check
+  script: checkserver.py
+  secure: optional
 
 - url: .*
   script: main.py
